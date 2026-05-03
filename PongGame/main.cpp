@@ -17,28 +17,28 @@ int main()
 		ballX += ballSpeedX * GetFrameTime(); //ajoute une vitesse a notre balle et on multiplie par le temp entre frames pour que la vitesse soit identique peut importe le FPS
 		ballY += ballSpeedY * GetFrameTime();
 
-		//Fonction haut écran
-		if (ballY < 0) //si la balle dépasse le Haut/bas de l'écran
+		//Fonction haut/bas écran
+		if (ballY < 0) //si la balle dépasse le Haut de l'écran alors
 		{
 			ballY = 0; // remet la balle exactement au bord
-			ballSpeedY *= -1; // inverse la direction
+			ballSpeedY *= -1; // inverse la direction haut
 		}
-		if (ballY > GetScreenHeight()) // si la balle dépasse le bas de l'écran
+		if (ballY > GetScreenHeight()) // si la balle dépasse le bas de l'écran alors
 		{
 			ballY = GetScreenHeight(); //permet d'eviter que la balle reste bloquée en bas de l'écran pendent un moment 
-			ballSpeedY *= -1;
-			// on inverse la direction verticale = rebond
+			ballSpeedY *= -1; // inverse la direction bas 
 		}
+		
 		// Fonction Largeur écrant
-		if (ballX < 0) // si la balle depasse les coté de l'écrant alors
+		if (ballX < 0) // si la balle depasse le coté gauche de l'écrant alors
 		{
 			ballX = 0;
-			ballSpeedX *= -1; // inverse la direction
+			ballSpeedX *= -1; // inverse la direction gauche
 		}
-		if (ballX > GetScreenWidth())
+		if (ballX > GetScreenWidth()) // si la balle depasse le coté droit alors
 		{
 			ballX = GetScreenWidth();
-			ballSpeedX *= -1;
+			ballSpeedX *= -1; // inverse la direction droit
 		}
 
 		BeginDrawing(); //dessine la page avec ce qui suit en dessou couleur ect
