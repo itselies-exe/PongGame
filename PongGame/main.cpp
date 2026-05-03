@@ -18,7 +18,7 @@ int main()
 		ballY += ballSpeedY * GetFrameTime();
 
 		//Fonction haut écran
-		if (ballY < 0) //si la balle dépasse le Haut de l'écran
+		if (ballY < 0) //si la balle dépasse le Haut/bas de l'écran
 		{
 			ballY = 0; // remet la balle exactement au bord
 			ballSpeedY *= -1; // inverse la direction
@@ -29,11 +29,11 @@ int main()
 			ballSpeedY *= -1;
 			// on inverse la direction verticale = rebond
 		}
-		// Fonction bas écran
-		if (ballX < 0)
+		// Fonction Largeur écrant
+		if (ballX < 0) // si la balle depasse les coté de l'écrant alors
 		{
 			ballX = 0;
-			ballSpeedX *= -1;
+			ballSpeedX *= -1; // inverse la direction
 		}
 		if (ballX > GetScreenWidth())
 		{
