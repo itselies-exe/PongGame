@@ -7,6 +7,24 @@ struct Ball
 	float x, y;
 	float speedX, speedY;
 	float radius;
+
+	void Draw() 
+	{
+		//drawCircle attend des int on ne peut pas lui donner un (float 2.0f) directement ça va raler on fait un (cast) on dit au compliateur de convertir ce float en int il devient du coup 2
+		DrawCircle((int) x, (int) y, radius, WHITE); //on prend la largeur et hauteur de l'écrant puis on la divise par 2 le rayon est mis a 5 et mis une couleur blanche
+	}
+};
+
+struct Paddle
+{
+	float x, y;
+	float speed;
+	float width, height;
+
+	void Draw()
+	{
+		DrawRectangle(x - width / 2, y - height /2, 10, 100, WHITE); 
+	}
 };
 
 int main() 
@@ -15,7 +33,7 @@ int main()
 	SetWindowState(FLAG_VSYNC_HINT); // regle le taux de rafraichissement de l'ecrant
 
 	Ball ball;
-	//au lieu d'appeler les float j'ai fait une struct en haut se qui permet de mettre directement la valeur 
+	//au lieu d'appeler les float j'ai fait une struct en haut se qui permet de mettre directement la valeur ball.x ball.y etc.
 	//permet de changer la position de la balle 
 	ball.x = GetScreenWidth() / 2.0f;
 	ball.y = GetScreenHeight() / 2.0f;
@@ -23,6 +41,21 @@ int main()
 	ball.speedX = 300; // on ajoute de la vitesse 
 	ball.speedY = 300;
 
+	//raquette gauche
+	Paddle leftPaddle;
+	leftPaddle.x = 50;//je prend la valeur 50 de DrawRectangle(50, GetScreenHeight() / 2 - 50, 10, 100, WHITE); plus bas
+	leftPaddle.y = GetScreenHeight() / 2;
+	leftPaddle.width = 10;
+	leftPaddle.height = 100;
+	leftPaddle.speed = 500;
+	//raquette droite
+	//au lieu de DrawCircle(GetScreenWidth() / 2, GetScreenHeight() / 2, 5, WHITE); nous le transformons en une seule fonction rightPaddle pareil pour celui de gauche
+	Paddle rightPaddle;
+	rightPaddle.x = GetScreenWidth() - 50;
+	rightPaddle.y = GetScreenHeight() / 2;
+	rightPaddle.width = 10;
+	rightPaddle.height = 100;
+	rightPaddle.speed = 500;
 
 	while (!WindowShouldClose()) // une boucle qui permet de garder la fenetre ouverte 
 	{
@@ -56,15 +89,12 @@ int main()
 		BeginDrawing(); //dessine la page avec ce qui suit en dessou couleur ect
 		ClearBackground(BLACK); // permet de colorer le fond de la page 
 
-		//drawCircle attend des int on ne peut pas lui donner un (float 2.0f) directement ça va raler on fait un (cast) on dit au compliateur de convertir ce float en int il devient du coup 2
-		DrawCircle((int) ball.x, (int) ball.y, ball.radius, WHITE); //on prend la largeur et hauteur de l'écrant puis on la divise par 2 le rayon est mis a 5 et mis une couleur blanche
-		DrawRectangle(50, GetScreenHeight() / 2 - 50, 10, 100, WHITE); //rectangle Gauche est legerement decaler par rapport a la gauche on soutrai la moitier de deux a 50pour centrer le rectangle
+		//On appel la fonction DrawCircle((int) x, (int) y, radius, WHITE); plus haut
+		ball.Draw();
+		//on appel leftPaddle rightPaddle qui sont plus haut 
+		leftPaddle.Draw();
+		rightPaddle.Draw();
 
-		/*
-		le rectangle Droit nous devons obtenir la largeur total de l'écrant et soustraire a 50
-		le rectangle est dessiner a partir de la gauche on soustrait egalement la largeur de la raquette
-		*/
-		DrawRectangle(GetScreenWidth() - 50 - 10, GetScreenHeight() / 2 - 50, 10, 100, WHITE); 
 
 		EndDrawing(); //permet de terminer le processus dessin et gere aussi des evenements exemple quiter plein ecrant reduire page ect
 
